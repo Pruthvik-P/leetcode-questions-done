@@ -1,21 +1,13 @@
 class Solution:
     def leftRightDifference(self, nums: List[int]) -> List[int]:
-        n = len(nums)
-        difference = [0] * n
-        right = [0] * n
-        left = [0] * n
+        diff_arr = [0] * len(nums)
+        leftSum = 0
+        rightSum = sum(nums)
 
-        left[0] = nums[0]
-        for i in range(1,n):
-            left[i] = left[i-1] + nums[i]
-        
-        right[n-1] = nums[n-1]
-        for i in range(n-2,-1,-1):
-            right[i] = right[i+1] + nums[i]
-        
-        for i in range(n):
-            difference[i] = abs(left[i] - right[i])
+        for i in range(len(nums)):
+            rightSum -= nums[i]
+            diff_arr[i] = abs(rightSum -leftSum)
+            leftSum += nums[i]
 
-        return difference
-
+        return diff_arr
         
