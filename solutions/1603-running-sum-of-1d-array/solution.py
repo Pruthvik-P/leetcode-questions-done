@@ -5,4 +5,5 @@ class Solution:
         for i in range(len(nums)):
             s += nums[i]
             result[i] = s
+
         return result
