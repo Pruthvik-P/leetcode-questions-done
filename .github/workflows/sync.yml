@@ -1,0 +1,22 @@
+name: Sync LeetCode to GitHub
+
+on:
+  workflow_dispatch: # Allows you to run this manually anytime
+  schedule:
+    - cron: '0 0 * * *' # Runs automatically every day at midnight UTC
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Sync LeetCode Solutions
+        uses: joshcai/leetcode-sync@v1.7.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          leetcode-session: ${{ secrets.LEETCODE_SESSION }}
+          leetcode-csrf-token: ${{ secrets.LEETCODE_CSRF_TOKEN }}
+          destination-folder: solutions # Sub-folder where code will be saved
