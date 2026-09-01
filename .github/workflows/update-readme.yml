@@ -1,0 +1,33 @@
+name: Update Directory Count in README
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: {}   # lets you trigger it manually from the Actions tab
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # needed so the workflow can push the updated README.md
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Generate README.md
+        run: bash generate_readme.sh .
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          if git diff --cached --quiet; then
+            echo "No changes to README.md, skipping commit."
+          else
+            git commit -m "chore: update directory count in README.md [skip ci]"
+            git push
+          fi
